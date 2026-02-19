@@ -1,0 +1,49 @@
+"""
+Problem:
+Given two strings, write a method to decide if one is a permutation of the other.
+"""
+
+"""
+Questions:
+- Case sensitivity?
+
+Algorithm:
+- Option 1:
+    You can use the sorted() python builtin to sort the strings and compare them.
+
+- Option 2:
+    Language agnostic approach: 
+    Create a hash map of all the characters in both strings, count each one.
+    Then compare the keys in one to another. They should be the same.
+    Time complexity = O(n)
+"""
+
+from collections import Counter
+
+
+def check_permutations(str_1, str_2):
+    # check length of string first, if they are different, then instant fail
+    print(f"Checking [{str_1}] vs [{str_2}]")
+    
+    if len(str_1) != len(str_2):
+        print("False, Len check fail")
+        return False
+
+    counter_str1 = Counter(str_1)
+    counter_str2 = Counter(str_2)
+
+    for k, v in counter_str1.items():
+        res = counter_str2.get(k)
+        if v != res:
+            print("False")
+            return False
+    
+    print("True")
+    return True
+
+if __name__ == "__main__":
+    check_permutations("Hello", "hello")
+    check_permutations("hello", "hello")
+    check_permutations("1223345", "1223345")
+    check_permutations("❤️", "❤️")
+    check_permutations("❤️", "✅")  # fails the len() check. Emojis are difficult to deal with - due to unicode length, we need to use regex library

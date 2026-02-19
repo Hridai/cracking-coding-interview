@@ -1,0 +1,44 @@
+"""
+Problem:
+Implement an algorithm to determine if a string has all unique characters. What if you
+cannot use additional data structures?
+"""
+
+"""
+Questions:
+- Can we expect a valid input, always?
+- Can we strip out spaces?
+
+Algorithm:
+Create a set of the string to get the unique characters, if the length is the same as the input
+string then it return True else False
+O(1)
+
+if we cannot use data structures, we will have to iterate over each character manually
+O(n)
+
+"""
+
+def is_unique(input_str):
+    return len(set(input_str)) == len(input_str)
+
+def test(input_data, expected_result):
+    answer = is_unique(input_data)
+
+    if answer != expected_result:
+        raise Exception(
+            f"Answer {answer} does not match expected result {expected_result}"
+        )
+
+
+if __name__ == "__main__":
+    test("abcdefg", True)
+    test("hello", False)
+    test("", True)
+    test("aA", True)
+    test("1234567890", True)
+    test("112233", False)
+    test("!@#$%^&*()", True)
+    test("AaBbCc", True)
+    test("The quick brown fox", False)
+    print("All tests passed.")
