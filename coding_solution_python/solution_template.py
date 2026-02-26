@@ -12,10 +12,13 @@ Algorithm:
 
 """
 
+def func():
+    True
+
 
 def test_func():
-    return True
+    return func()
 
 
-if __name__ == "__main__:
+if __name__ == "__main__":
     test_func()
