@@ -24,20 +24,38 @@ Algorithm:
 """
 
 
-def urlify(str_in, expected_result):
-    print(f"running {str_in}")
-    res = []
-    for s in str_in:
-        res.append("%20") if s == " " else res.append(s)
-    res = "".join(res)
-    print(f"result: {res}")
-    if res == expected_result:
-        print("True")
-        return True
-    else:
-        print("False")
-        return False
+def urlify(s, true_length):
+    space_count = sum(1 for i in range(true_length) if s[i] == " ")
+    chars = list(s[:true_length] + " " * (space_count * 2))
+
+    i = true_length - 1
+    j = len(chars) - 1
+
+    while i >= 0:
+        if chars[i] == " ":
+            chars[j] = "0"
+            chars[j - 1] = "2"
+            chars[j - 2] = "%"
+            j -= 3
+        else:
+            chars[j] = chars[i]
+            j -= 1
+        i -= 1
+
+    return "".join(chars)
+
+
+def test(input_str, true_length, expected):
+    result = urlify(input_str, true_length)
+    if result != expected:
+        raise Exception(f"FAIL: urlify({input_str!r}) => {result!r}, expected {expected!r}")
+
 
 if __name__ == "__main__":
-    urlify("hiya", "hiya")
-    urlify("hiya ", "hiya%20")
+    test("Mr John Smith", 13, "Mr%20John%20Smith")
+    test("hiya ", 4, "hiya")
+    test("hiya ", 5, "hiya%20")
+    test("   ", 3, "%20%20%20")
+    test("", 0, "")
+    test("nospaces", 8, "nospaces")
+    print("All tests passed.")
