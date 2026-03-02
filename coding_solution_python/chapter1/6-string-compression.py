@@ -25,15 +25,29 @@ that.
 def string_compression(string_in):
     res = []
     prev_letter = ""
-    prev_letter_count = 0
+    prev_letter_count = 1
     for s in string_in:
-        if s == prev_letter:
-            
+        if s != prev_letter:
+            if prev_letter:
+                res.append(f"{prev_letter}{str(prev_letter_count)}")
+            prev_letter = s
+            prev_letter_count = 1
+        else:
+            prev_letter = s
+            prev_letter_count += 1
+    res.append(f"{prev_letter}{str(prev_letter_count)}")
+    res = "".join(res)
+    if len(res) >= len(string_in):
+        return string_in
+    else:
+        return res
 
-
-def test_func():
-    return func()
+def test_func(string_in, expected_result):
+    res = string_compression(string_in)
+    if res != expected_result:
+        raise ValueError(f"Error - {string_in} returns {res}, expected {expected_result}!")
 
 
 if __name__ == "__main__":
-    test_func()
+    test_func("aabcccccaaa", "a2b1c5a3")
+    test_func("aab", "aab")
