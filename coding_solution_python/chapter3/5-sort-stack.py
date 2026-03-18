@@ -15,6 +15,11 @@ Algorithm:
 
 """
 
+import sys, os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'utils'))
+from stack import Stack
+
+
 def func_to_write():
     pass
 
